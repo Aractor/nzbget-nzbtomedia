@@ -19,6 +19,7 @@ RUN \
 	unrar \
 	git \
   ffmpeg \
+  par2 \
 	wget && \
  echo "**** install nzbget ****" && \
  mkdir -p \
