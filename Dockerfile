@@ -51,6 +51,9 @@ RUN \
  mkdir /scripts
 
 RUN \
+ chmod 777 -R /scripts
+
+RUN \
 git clone https://github.com/clinton-hall/nzbToMedia.git /scripts
 
 RUN \
