@@ -49,7 +49,6 @@ COPY root/ /
 # install nzbToMedia
 RUN \
  mkdir /scripts
- chmod 777 -R /scripts
 
 RUN \
  chmod 777 -R /scripts
