@@ -18,7 +18,8 @@ RUN \
 	python2 \
 	unrar \
 	git \
-  ffmpeg \
+  	ffmpeg \
+	par2cmdline \
 	wget && \
  echo "**** install nzbget ****" && \
  mkdir -p \
@@ -51,10 +52,10 @@ RUN \
  mkdir /scripts
 
 RUN \
- chmod 777 -R /scripts
+git clone https://github.com/clinton-hall/nzbToMedia.git /scripts
 
 RUN \
-git clone https://github.com/clinton-hall/nzbToMedia.git /scripts
+ chmod 777 -R /scripts
 
 RUN \
 ln -sf /usr/bin/python2.7 /usr/bin/python2
