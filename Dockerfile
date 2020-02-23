@@ -1,4 +1,4 @@
-FROM lsiobase/alpine:3.8
+FROM lsiobase/alpine:edge
 
 # set version label
 ARG BUILD_DATE
@@ -12,6 +12,7 @@ ARG NZBGET_BRANCH="stable-download"
 
 RUN \
  echo "**** install packages ****" && \
+ echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
  apk add --no-cache \
 	curl \
 	p7zip \
@@ -19,7 +20,7 @@ RUN \
 	unrar \
 	git \
   	ffmpeg \
-	par2cmdline \
+	par2cmdline@testing \
 	wget && \
  echo "**** install nzbget ****" && \
  mkdir -p \
