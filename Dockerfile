@@ -6,17 +6,13 @@ ARG VERSION
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="Aractor"
 
-# package version
-# (stable-download or testing-download)
-ARG NZBGET_BRANCH="stable-download"
+RUN apk update
 
-RUN \
- apk update \
- echo "**** install packages ****" && \
- echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
+RUN echo "**** install packages ****" && \
+# echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
  apk add --no-cache \
   	ffmpeg \
-	par2cmdline@testing \
+	par2cmdline \
 
 # add local files
 COPY root/ /
