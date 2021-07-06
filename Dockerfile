@@ -18,8 +18,6 @@ RUN mkdir /scripts
 
 # install nzbget scripts
 RUN apk add --no-cache git
-RUN git clone https://github.com/clinton-hall/nzbToMedia.git /scripts/nzbToMedia
-RUN git clone https://github.com/nzbget/FakeDetector.git /scripts/FakeDectector
-RUN git clone https://github.com/JVMed/PasswordDetector.git /scripts/PasswordDectector
+RUN git clone -b nightly https://github.com/clinton-hall/nzbToMedia.git /scripts/nzbToMedia
 
 RUN chmod 775 -R /scripts
