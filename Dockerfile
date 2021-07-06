@@ -28,3 +28,6 @@ RUN git clone https://github.com/nzbget/FakeDetector.git /scripts/FakeDectector
 RUN git clone https://github.com/JVMed/PasswordDetector.git /scripts/PasswordDectector
 
 RUN chmod 775 -R /scripts
+
+#Set script directory setting in NZBGet
+ONBUILD RUN sed -i 's/^ScriptDir=.*/ScriptDir=\/scripts' /config/nzbget.conf
