@@ -8,24 +8,18 @@ LABEL maintainer="Aractor"
 
 RUN apk update
 
-RUN echo "**** install packages ****" && \
-# echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
- apk add --no-cache \
-  	ffmpeg \
-	par2cmdline \
+# install packages
+RUN apk add --no-cache ffmpeg
+RUN apk add --no-cache par2cmdline
 
 # add local files
 COPY root/ /
 
-# install nzbToMedia
-RUN \
- mkdir /scripts
+RUN mkdir /scripts
 
-RUN \
-echo "**** install nzbget scripts ****" && \
-git clone https://github.com/clinton-hall/nzbToMedia.git /scripts/nzbToMedia \
-git clone https://github.com/nzbget/FakeDetector.git /scripts/FakeDectector \
-git clone https://github.com/JVMed/PasswordDetector.git /scripts/PasswordDectector \
+# install nzbget scripts
+RUN git clone https://github.com/clinton-hall/nzbToMedia.git /scripts/nzbToMedia
+RUN git clone https://github.com/nzbget/FakeDetector.git /scripts/FakeDectector
+RUN git clone https://github.com/JVMed/PasswordDetector.git /scripts/PasswordDectector
 
-RUN \
- chmod 777 -R /scripts
+RUN chmod 775 -R /scripts
