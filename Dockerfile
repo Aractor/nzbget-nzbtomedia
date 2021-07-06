@@ -20,4 +20,4 @@ RUN mkdir /scripts
 RUN apk add --no-cache git
 RUN git clone -b nightly https://github.com/clinton-hall/nzbToMedia.git /scripts/nzbToMedia
 
-RUN chmod 775 -R /scripts
+RUN chmod 777 -R /scripts
