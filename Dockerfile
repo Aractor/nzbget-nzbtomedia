@@ -1,49 +1,22 @@
-FROM lsiobase/alpine:edge
+FROM ghcr.io/linuxserver/nzbget:latest
 
 # set version label
 ARG BUILD_DATE
 ARG VERSION
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="sparklyballs"
+LABEL maintainer="Aractor"
 
 # package version
 # (stable-download or testing-download)
 ARG NZBGET_BRANCH="stable-download"
 
 RUN \
+ apk update \
  echo "**** install packages ****" && \
  echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
  apk add --no-cache \
-	curl \
-	p7zip \
-	python2 \
-	unrar \
-	git \
   	ffmpeg \
 	par2cmdline@testing \
-	wget && \
- echo "**** install nzbget ****" && \
- mkdir -p \
-	/app/nzbget && \
- curl -o \
- /tmp/json -L \
-	http://nzbget.net/info/nzbget-version-linux.json && \
- NZBGET_VERSION=$(grep "${NZBGET_BRANCH}" /tmp/json  | cut -d '"' -f 4) && \
- curl -o \
- /tmp/nzbget.run -L \
-	"${NZBGET_VERSION}" && \
- sh /tmp/nzbget.run --destdir /app/nzbget && \
- echo "**** configure nzbget ****" && \
- cp /app/nzbget/nzbget.conf /defaults/nzbget.conf && \
- sed -i \
-	-e "s#\(MainDir=\).*#\1/downloads#g" \
-	-e "s#\(ScriptDir=\).*#\1$\{MainDir\}/scripts#g" \
-	-e "s#\(WebDir=\).*#\1$\{AppDir\}/webui#g" \
-	-e "s#\(ConfigTemplate=\).*#\1$\{AppDir\}/webui/nzbget.conf.template#g" \
- /defaults/nzbget.conf && \
- echo "**** cleanup ****" && \
- rm -rf \
-	/tmp/*
 
 # add local files
 COPY root/ /
@@ -53,15 +26,10 @@ RUN \
  mkdir /scripts
 
 RUN \
-git clone https://github.com/clinton-hall/nzbToMedia.git /scripts
+echo "**** install nzbget scripts ****" && \
+git clone https://github.com/clinton-hall/nzbToMedia.git /scripts/nzbToMedia \
+git clone https://github.com/nzbget/FakeDetector.git /scripts/FakeDectector \
+git clone https://github.com/JVMed/PasswordDetector.git /scripts/PasswordDectector \
 
 RUN \
  chmod 777 -R /scripts
-
-RUN \
-ln -sf /usr/bin/python2.7 /usr/bin/python2
-
-
-# ports and volumes
-VOLUME /config /downloads
-EXPOSE 6789
